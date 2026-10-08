@@ -1,0 +1,44 @@
+#include <iostream>
+#include <string>
+
+class Shape 
+{
+protected:
+    int sides;
+
+public:
+    explicit Shape(int s) : sides(s) {}
+
+   
+    int getSides() const 
+    {
+        return sides;
+    }
+}
+
+class Triangle : public Shape 
+{
+public:
+    Triangle() : Shape(3) {}
+}
+
+class Quadrilateral : public Shape 
+{
+public:
+    Quadrilateral() : Shape(4) {}
+}
+
+int main() 
+{
+    Shape unknown(0);
+
+    Triangle triangle;
+    Quadrilateral quadrilateral;
+
+    std::cout << "Количество сторон:\n" << std::endl;
+    std::cout << "Фигура: " << unknown.getSides() << "\n" << std::endl;
+    std::cout << "Треугольник: " << triangle.getSides() << "\n" << std::endl;
+    std::cout << "Четырёхугольник: " << quadrilateral.getSides() << "\n" << std::endl;
+
+    return 0;
+}
