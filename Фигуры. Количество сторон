@@ -1,44 +1,104 @@
 #include <iostream>
 #include <string>
 
+
 class Shape 
 {
-protected:
-    int sides;
-
 public:
-    explicit Shape(int s) : sides(s) {}
+    virtual ~Shape() = default;
 
    
-    int getSides() const 
+    virtual int getSides() const = 0;
+
+   
+    virtual void printInfo() const 
     {
-        return sides;
+        std::cout << "Фигура: неизвестная, сторон: " << getSides() << "\n" << std::endl;
     }
-}
+};
+
 
 class Triangle : public Shape 
 {
 public:
-    Triangle() : Shape(3) {}
-}
+    int getSides() const override 
+    {
+        return 3;
+    }
 
-class Quadrilateral : public Shape 
+    void printInfo() const override 
+    {
+        std::cout << "Треугольник, сторон: " << getSides() << "\n" << std::endl;
+    }
+};
+
+
+class Rectangle : public Shape 
 {
 public:
-    Quadrilateral() : Shape(4) {}
-}
+    int getSides() const override 
+    {
+        return 4;
+    }
+
+    void printInfo() const override 
+    {
+        std::cout << "Прямоугольник, сторон: " << getSides() << "\n" << std::endl;
+    }
+};
+
+
+class Square : public Shape 
+{
+public:
+    int getSides() const override 
+    {
+        return 4;
+    }
+
+    void printInfo() const override 
+    {
+        std::cout << "Квадрат, сторон: " << getSides() << "\n" << std::endl;
+    }
+};
+
+
+class Pentagon : public Shape 
+{
+public:
+    int getSides() const override 
+    {
+        return 5;
+    }
+
+    void printInfo() const override 
+    {
+        std::cout << "Пятиугольник, сторон: " << getSides() << "\n" << std::endl;
+    }
+};
 
 int main() 
 {
-    Shape unknown(0);
-
+   
     Triangle triangle;
-    Quadrilateral quadrilateral;
+    Rectangle rectangle;
+    Square square;
+    Pentagon pentagon;
 
-    std::cout << "Количество сторон:\n" << std::endl;
-    std::cout << "Фигура: " << unknown.getSides() << "\n" << std::endl;
-    std::cout << "Треугольник: " << triangle.getSides() << "\n" << std::endl;
-    std::cout << "Четырёхугольник: " << quadrilateral.getSides() << "\n" << std::endl;
+    
+    triangle.printInfo();
+    rectangle.printInfo();
+    square.printInfo();
+    pentagon.printInfo();
+
+   
+    std::cout << "\n--- Полиморфизм через указатели ---\n" << std::endl;
+    const Shape* shapes[] = { &triangle, &rectangle, &square, &pentagon };
+
+    for (const auto* s : shapes) 
+    {
+        s->printInfo();
+    }
 
     return 0;
 }
